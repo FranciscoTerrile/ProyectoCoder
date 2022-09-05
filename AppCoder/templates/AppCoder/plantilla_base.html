@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -28,21 +29,18 @@
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
                 <a class="navbar-brand" href="{% url 'inicio' %}">Inicio</a>
-                <a class="navbar-brand" href="{% url 'reservas' %}">Reservas</a>
+                <a class="navbar-brand" href="{% url 'reservas' %}">Formulario de Reservas</a>
                 <a class="navbar-brand" href="{% url 'partidos' %}">Próximas fechas</a>
-                <a class="navbar-brand" href="{% url 'jugadores' %}">Portal Jugador</a>
+                <a class="navbar-brand" href="{% url 'jugadores' %}">Jugadores</a>
                 <a class="btn btn-primary" href="#signup">INICIAR</a>
             </div>
         </nav>
 
-        <section style="margin:80px;">
-
+        <section style="padding:80px;">
         {% block contenido_base %}
         {% endblock contenido_base %}
 
-        <section style="padding:80px;">
-            <img src= "portada.jpg" >
-
+        <img id="currentPhoto" src="portada.jpg" onerror="this.onerror=null; this.src='portada.jpg'" alt="" width="100" height="120">
         </section>
 
 

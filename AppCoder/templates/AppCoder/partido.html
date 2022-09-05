@@ -1,46 +1,8 @@
 {% extends "AppCoder/plantilla_base.html" %}
 
-{% block style_block %}
-<style>
-  table.coder-table {
-    border:3px solid;
-  }
-  th,
-  td {
-    border:1px solid;
-    padding:5px 10px;
-  }
-</style>
-{% endblock style_block %}
-
 {% block contenido_base %}
 
-<h1>Partidos</h1>
-<a href="{% url 'partido_formulario' %}">Crear nuevo partido</a>
-<br>
-<a href="{% url 'busqueda_partido
-_form' %}">Buscar partidos por disputarse</a>
 
-<br><br>
-<h3>Partidos:</h3>
-
-<table class="coder-table">
-  <tbody>
-    <tr>
-      <th>
-        <strong>Equipos</strong>
-      </th>
-      <th>
-        <strong>Fecha</strong>
-      </th>
-    </tr>
-    {% for partido in partidos %}
-    <tr>
-      <td>{{partido.fecha}}</td>
-      <td>{{partido.equipo}}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<h1>Próximos partidos</h1>
 
 {% endblock contenido_base %}

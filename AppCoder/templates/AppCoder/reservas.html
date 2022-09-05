@@ -1,7 +1,46 @@
 {% extends "AppCoder/plantilla_base.html" %}
 
+{% block style_block %}
+<style>
+  table.coder-table {
+    border:3px solid;
+  }
+  th,
+  td {
+    border:1px solid;
+    padding:5px 10px;
+  }
+</style>
+{% endblock style_block %}
+
 {% block contenido_base %}
 
 <h1>Reservas</h1>
+<a href="{% url 'reserva_formulario' %}">Crear nueva reserva</a>
+<br>
+<a href="{% url 'busqueda_reserva
+_form' %}">Buscar Reservas</a>
+
+<br><br>
+<h3>Reservas realizadas:</h3>
+
+<table class="coder-table">
+  <tbody>
+    <tr>
+      <th>
+        <strong>Equipos</strong>
+      </th>
+      <th>
+        <strong>Fecha</strong>
+      </th>
+    </tr>
+    {% for reserva in reservas %}
+    <tr>
+      <td>{{reserva.nombre}}</td>
+      <td>{{reserva.equipo}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
 {% endblock contenido_base %}
