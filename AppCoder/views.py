@@ -22,9 +22,9 @@ def jugadores(request):
       return render(request, "AppCoder/jugadores.html")
 
 
-def fanaticos(request):
+def reservas(request):
 
-      return render(request, "AppCoder/fanaticos.html")
+      return render(request, "AppCoder/reservas.html")
 
 
 def partidos(request):

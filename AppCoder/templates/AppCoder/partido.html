@@ -15,10 +15,11 @@
 
 {% block contenido_base %}
 
-<h1>Cursos</h1>
-<a href="{% url 'partido_formulario' %}">Crear nuevo partido!</a>
+<h1>Partidos</h1>
+<a href="{% url 'partido_formulario' %}">Crear nuevo partido</a>
 <br>
-<a href="{% url 'busqueda_curso_form' %}">Buscar Partidos</a>
+<a href="{% url 'busqueda_partido
+_form' %}">Buscar partidos por disputarse</a>
 
 <br><br>
 <h3>Partidos:</h3>
@@ -27,10 +28,10 @@
   <tbody>
     <tr>
       <th>
-        <strong>Nombre</strong>
+        <strong>Equipos</strong>
       </th>
       <th>
-        <strong>Comision</strong>
+        <strong>Fecha</strong>
       </th>
     </tr>
     {% for partido in partidos %}

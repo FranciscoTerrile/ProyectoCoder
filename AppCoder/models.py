@@ -8,7 +8,7 @@ Partido (nombre, fechaDePartido,reservado)
 Pais(nombre, jugador_preferido)
 """
 
-class Fanatico(models.Model):
+class Reservas(models.Model):
     nombre = models.CharField(max_length=128)
     apellido = models.CharField(max_length=128)
     email = models.EmailField()
