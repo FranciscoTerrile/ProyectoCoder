@@ -1,7 +1,7 @@
 from datetime import date
 from typing import Dict
-from django.shortcuts import render, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import HttpResponse
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from AppCoder.models import Partido, Reserva
 from AppCoder.forms import ReservaFormulario
@@ -25,29 +25,18 @@ def reserva(request):
       
       return render(request, "AppCoder/reservas.html")
 
-
-def reserva_formulario(request):
-      if request.method == "POST":
-            data_formulario: Dict = request.POST
-            Reservas = Reserva(nombre=data_formulario['nombre'], equipo=data_formulario['equipo'])
-            Reservas.save()
-            return render (request, "AppCoder/inicio.html")
-      else:
-            return render(request,"AppCoder/form:reservas.html")
-
 def reserva_formulario(request):
       if request.method == 'POST':
             formulario= ReservaFormulario(request.POST)
 
             if formulario.is_valid():
                   data = formulario.cleaned_data
-                  Reservar = Reserva(nombre=data['nombre'], equipo=data['equipo'])
-                  Reservar.save()
-                  return render(request, "AppCoder/inicio.html", {"exitoso": True})
+                  reservar=Reserva(**data)
+                  #reservar = Reserva(nombre=data['nombre'], equipo=data['equipo'])
+                  reservar.save()
+                  return redirect(reverse('reservas'))
       else:
-            return render(request, "AppCoder/form_reserva.html")
-
-            formulario= IdFormulario()  # Formulario vacio para construir el html
+            formulario= ReservaFormulario()  # Formulario vacio para construir el html
       return render(request, "AppCoder/form_reserva.html", {"formulario": formulario})
 
 
