@@ -1,9 +1,9 @@
 {% extends "AppCoder/plantilla_base.html" %}
 {% block contenido_base %}
-<form action="{% url 'busqueda_partido' %}" method="GET">
+<form action="{% url 'busqueda_reserva' %}" method="GET">
   {% csrf_token %}
-  <span>Fecha:
-    <input type="stringformat" equipo="equipo">
+  <span>Equipo:
+    <input type="text" equipo="equipo">
   </span>
   <input type="submit" value="Buscar" />
 </form>

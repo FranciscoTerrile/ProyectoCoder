@@ -18,8 +18,7 @@
 <h1>Reservas</h1>
 <a href="{% url 'reserva_formulario' %}">Crear nueva reserva</a>
 <br>
-<a href="{% url 'busqueda_reserva
-_form' %}">Buscar Reservas</a>
+<a href="{% url 'busqueda_reserva_form' %}">Buscar Reservas</a>
 
 <br><br>
 <h3>Reservas realizadas:</h3>
@@ -34,10 +33,10 @@ _form' %}">Buscar Reservas</a>
         <strong>Fecha</strong>
       </th>
     </tr>
-    {% for reserva in reservas %}
+    {% for reserva in reservar %}
     <tr>
-      <td>{{reserva.nombre}}</td>
-      <td>{{reserva.equipo}}</td>
+      <td>{{reservar.nombre}}</td>
+      <td>{{reservar.equipo}}</td>
     </tr>
     {% endfor %}
   </tbody>

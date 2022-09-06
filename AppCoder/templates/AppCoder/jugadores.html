@@ -1,8 +1,45 @@
 {% extends "AppCoder/plantilla_base.html" %}
 
+{% block style_block %}
+<style>
+  table.coder-table {
+    border:3px solid;
+  }
+  th,
+  td {
+    border:1px solid;
+    padding:5px 10px;
+  }
+</style>
+{% endblock style_block %}
+
 {% block contenido_base %}
 
-
 <h1>Jugadores</h1>
+<a href="{% url 'jugador_formulario' %}">Crear nuevo jugador</a>
+<br>
+<a href="{% url 'busqueda_jugador_form' %}">Buscar Jugadores</a>
+
+<br><br>
+<h3>Juagdores registrados:</h3>
+
+<table class="coder-table">
+  <tbody>
+    <tr>
+      <th>
+        <strong>Nombre</strong>
+      </th>
+      <th>
+        <strong>Posicion</strong>
+      </th>
+    </tr>
+    {% for jugador in jugadores %}
+    <tr>
+      <td>{{juagdor.nombre}}</td>
+      <td>{{jugador.pais}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
 {% endblock contenido_base %}

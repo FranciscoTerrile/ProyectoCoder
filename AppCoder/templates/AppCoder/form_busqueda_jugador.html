@@ -1,0 +1,10 @@
+{% extends "AppCoder/plantilla_base.html" %}
+{% block contenido_base %}
+<form action="{% url 'busqueda_jugador' %}" method="GET">
+  {% csrf_token %}
+  <span>Pais:
+    <input type="stringformat" pais="pais">
+  </span>
+  <input type="submit" value="Buscar" />
+</form>
+{% endblock contenido_base %}
