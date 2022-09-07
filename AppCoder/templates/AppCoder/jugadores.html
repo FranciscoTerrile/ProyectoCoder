@@ -10,33 +10,41 @@
     border:1px solid;
     padding:5px 10px;
   }
+  .eliminado {
+    background-color: red;
+  }
 </style>
 {% endblock style_block %}
 
 {% block contenido_base %}
 
+{% if borrado %}
+<div class="eliminado">El jugador fue borrado exitosamente: {{ borrado }}</div>
+{% endif %}
+
 <h1>Jugadores</h1>
-<a href="{% url 'jugador_formulario' %}">Crear nuevo jugador</a>
-<br>
-<a href="{% url 'busqueda_jugador_form' %}">Buscar Jugadores</a>
+<a href="{% url 'crear_jugador' %}">Crear jugador</a>
 
 <br><br>
-<h3>Juagdores registrados:</h3>
 
 <table class="coder-table">
   <tbody>
     <tr>
       <th>
-        <strong>Nombre</strong>
+        <strong>Apellido</strong>
       </th>
       <th>
-        <strong>Posicion</strong>
+        <strong>Nombre</strong>
       </th>
+      <th>Editar</th>
+      <th>Eliminar</th>
     </tr>
     {% for jugador in jugadores %}
     <tr>
-      <td>{{juagdor.nombre}}</td>
-      <td>{{jugador.pais}}</td>
+      <td>{{jugador.apellido}}</td>
+      <td>{{jugador.nombre}}</td>
+      <td><a href="{% url 'editar_jugador' jugador.id %}">Editar</a></td>
+      <td><a href="{% url 'eliminar_jugador' jugador.id %}">Eliminar</a></td>
     </tr>
     {% endfor %}
   </tbody>

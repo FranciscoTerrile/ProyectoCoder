@@ -16,27 +16,27 @@
 {% block contenido_base %}
 
 <h1>Reservas</h1>
-<a href="{% url 'reserva_formulario' %}">Crear nueva reserva</a>
+<a href="{% url 'crear_reserva' %}">Crear Reserva</a>
 <br>
-<a href="{% url 'busqueda_reserva_form' %}">Buscar Reservas</a>
+<a href="{% url 'busqueda_reserva_form' %}">Buscar Reserva</a>
 
 <br><br>
-<h3>Reservas realizadas:</h3>
+<h3>Reservas:</h3>
 
 <table class="coder-table">
   <tbody>
     <tr>
       <th>
-        <strong>Equipos</strong>
+        <strong>Nombre</strong>
       </th>
       <th>
-        <strong>Fecha</strong>
+        <strong>Equipo</strong>
       </th>
     </tr>
-    {% for reserva in reservar %}
+    {% for reserva in reservas %}
     <tr>
-      <td>{{reservar.nombre}}</td>
-      <td>{{reservar.equipo}}</td>
+      <td>{{reserva.nombre}}</td>
+      <td>{{reserva.equipo}}</td>
     </tr>
     {% endfor %}
   </tbody>
