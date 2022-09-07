@@ -2,8 +2,8 @@
 {% block contenido_base %}
 <form action="{% url 'busqueda_partido' %}" method="GET">
   {% csrf_token %}
-  <span>Fecha:
-    <input type="text" equipo="equipo">
+  <span>Equipo:
+    <input type="text" name="equipo">
   </span>
   <input type="submit" value="Buscar" />
 </form>

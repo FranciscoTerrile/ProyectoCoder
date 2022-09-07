@@ -13,7 +13,6 @@ def inicio(request):
 
       return render(request, "AppCoder/inicio.html")
 
-
 def partido(request):
     partidos = Partido.objects.all()
     return render(request, "AppCoder/partido.html", {'partidos': partidos})
@@ -48,13 +47,12 @@ def busqueda_reservas(request):
 
 
 def buscar_reserva(request):
-    if request.GET.get('nombre'):
-        nombre = request.GET('nombre') if nombre in request.GET else None
+    if request.GET['nombre']:
+        nombre = request.GET['nombre'] #if nombre in request.GET else None
         reservas = Reserva.objects.filter(nombre__icontains=nombre)
         return render(request, "AppCoder/reservas.html", {'reservas': reservas})
     else:
         return render(request, "AppCoder/reservas.html", {'reservas': []})
-
 
 #Formulario Juagdor
 
@@ -66,7 +64,7 @@ def crear_jugador(request):
             data = formulario.cleaned_data
             jugador = Jugador(**data)
             jugador.save()
-            return render(request, "AppCoder/jugadores.html", {"exitoso": True})
+            return render(request, "AppCoder/inicio.html", {"exitoso1": True})
     else:  # GET
         formulario = JugadorFormulario()  # Formulario vacio para construir el html
     return render(request, "AppCoder/form_jugador.html", {"formulario": formulario})
@@ -76,8 +74,8 @@ def busqueda_jugador(request):
 
 
 def buscar_jugador(request):
-    if request.GET('pais'):
-        pais = request.GET('pais') if pais in request.GET else None
+    if request.GET['pais']:
+        pais = request.GET['pais'] 
         jugadores = Jugador.objects.filter(pais__icontains=pais)
         return render(request, "AppCoder/jugadores.html", {'jugadores': jugadores})
     else:
@@ -93,22 +91,19 @@ def crear_partido(request):
             data = formulario.cleaned_data
             partido = Partido(**data)
             partido.save()
-            return render(request, "AppCoder/partido.html", {"exitoso": True})
+            return render(request, "AppCoder/inicio.html", {"exitoso2": True})
     else:  
         formulario = PartidoFormulario()  # Formulario vacio para construir el html
     return render(request, "AppCoder/form_partido.html", {"formulario": formulario})
 
     
-
 def busqueda_partido(request):
     return render(request, "AppCoder/form_busqueda_partido.html")
 
-
-
 def buscar_partido(request):
-    if request.GET('fecha'):
-        fecha = request.GET('fecha')
-        partidos = Partido.objects.filter(fecha__icontains=fecha)
+    if request.GET['equipo']:
+        equipo = request.GET['equipo']
+        partidos = Partido.objects.filter(equipo__icontains=equipo)
         return render(request, "AppCoder/partido.html", {'partidos': partidos})
     else:
         return render(request, "AppCoder/partido.html", {'partidos': []})
