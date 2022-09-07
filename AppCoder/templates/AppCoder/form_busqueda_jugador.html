@@ -3,7 +3,7 @@
 <form action="{% url 'busqueda_jugador' %}" method="GET">
   {% csrf_token %}
   <span>Pais:
-    <input type="stringformat" pais="pais">
+    <input type="text" pais="pais">
   </span>
   <input type="submit" value="Buscar" />
 </form>
