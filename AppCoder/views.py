@@ -15,16 +15,17 @@ def inicio(request):
 
 
 def partido(request):
+    partidos = Partido.objects.all()
+    return render(request, "AppCoder/partido.html", {'partidos': partidos})
       
-      return render(request, "AppCoder/partido.html")
 
 def reservas(request):
     reservas = Reserva.objects.all()
     return render(request, "AppCoder/reservas.html", {'reservas': reservas})
 
 def jugador(request):
-      
-      return render(request, "AppCoder/jugadores.html")
+    jugadores = Jugador.objects.all()
+    return render(request, "AppCoder/jugadores.html", {'jugadores': jugadores})
 
 # Fromulario Reservas
 
@@ -34,10 +35,10 @@ def crear_reserva(request):
 
         if formulario.is_valid():
             data = formulario.cleaned_data
-            reserva = Reserva(nombre=data['nombre'], equipo=data['equipo'])
+            reserva = Reserva(**data)
             reserva.save()
             return render(request, "AppCoder/inicio.html", {"exitoso": True})
-    else:  # GET
+    else:  
         formulario = ReservaFormulario()  # Formulario vacio para construir el html
     return render(request, "AppCoder/form_reserva.html", {"formulario": formulario})
 
@@ -56,6 +57,7 @@ def buscar_reserva(request):
 
 
 #Formulario Juagdor
+
 def crear_jugador(request):
     if request.method == 'POST':
         formulario = JugadorFormulario(request.POST)
@@ -64,7 +66,7 @@ def crear_jugador(request):
             data = formulario.cleaned_data
             jugador = Jugador(**data)
             jugador.save()
-            return redirect(reverse('jugadores'))
+            return render(request, "AppCoder/jugadores.html", {"exitoso": True})
     else:  # GET
         formulario = JugadorFormulario()  # Formulario vacio para construir el html
     return render(request, "AppCoder/form_jugador.html", {"formulario": formulario})
@@ -89,12 +91,14 @@ def crear_partido(request):
 
         if formulario.is_valid():
             data = formulario.cleaned_data
-            partido = Partido(fecha=data['fecha'], equipo=data['equipo'])
+            partido = Partido(**data)
             partido.save()
-            return redirect(reverse('partidos'))
-    else:  # GET
+            return render(request, "AppCoder/partido.html", {"exitoso": True})
+    else:  
         formulario = PartidoFormulario()  # Formulario vacio para construir el html
     return render(request, "AppCoder/form_partido.html", {"formulario": formulario})
+
+    
 
 def busqueda_partido(request):
     return render(request, "AppCoder/form_busqueda_partido.html")
