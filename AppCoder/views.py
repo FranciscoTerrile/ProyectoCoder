@@ -47,33 +47,15 @@ def busqueda_reservas(request):
 
 
 def buscar_reserva(request):
-    if request.GET.get['equipo']:
-        equipo = request.GET['equipo'] if equipo in request.GET else None
-        reservas = Reserva.objects.filter(equipo__icontains=equipo)
+    if request.GET.get('nombre'):
+        nombre = request.GET('nombre') if nombre in request.GET else None
+        reservas = Reserva.objects.filter(nombre__icontains=nombre)
         return render(request, "AppCoder/reservas.html", {'reservas': reservas})
     else:
         return render(request, "AppCoder/reservas.html", {'reservas': []})
 
 
 #Formulario Juagdor
-def jugadores(request):
-    jugadores = Jugador.objects.all()  # trae todos los jugadores
-    contexto = {"jugadores": jugadores}
-    borrado = request.GET.get('borrado', None)
-    contexto['borrado'] = borrado
-
-    return render(request, "AppCoder/jugadores.html", contexto)
-
-
-def eliminar_jugador(request, id):
-    jugador = Jugador.objects.get(id=id)
-    borrado_id = jugador.id
-    jugador.delete()
-    url_final = f"{reverse('jugadores')}?borrado={borrado_id}"
-
-    return redirect(url_final)
-
-
 def crear_jugador(request):
     if request.method == 'POST':
         formulario = JugadorFormulario(request.POST)
@@ -87,85 +69,19 @@ def crear_jugador(request):
         formulario = JugadorFormulario()  # Formulario vacio para construir el html
     return render(request, "AppCoder/form_jugador.html", {"formulario": formulario})
 
+def busqueda_jugador(request):
+    return render(request, "AppCoder/form_busqueda_jugador.html")
+
 
 def buscar_jugador(request):
-    if request.GET["pais"]:
-        pais = request.GET["pais"]
-        registros = Jugador.objects.filter(pais__icontains=pais)
-        return render(request, "AppCoder/jugadores.html", {'registros': registros})
+    if request.GET('pais'):
+        pais = request.GET('pais') if pais in request.GET else None
+        jugadores = Jugador.objects.filter(pais__icontains=pais)
+        return render(request, "AppCoder/jugadores.html", {'jugadores': jugadores})
     else:
-        return render(request, "AppCoder/jugadores.html", {'registros': []})
-
-def editar_jugador(request, id):
-    # Recibe param profesor id, con el que obtenemos el profesor
-    jugador = Jugador.objects.get(id=id)
-
-    if request.method == 'POST':
-        formulario = JugadorFormulario(request.POST)
-
-        if formulario.is_valid():
-            data = formulario.cleaned_data
-
-            jugador.nombre = data['nombre']
-            jugador.apellido = data['apellido']
-            jugador.posicion = data['posicion']
-            jugador.pais = data['pais']
-
-            jugador.save()
-
-            return redirect(reverse('jugadores'))
-    else:  # GET
-        inicial = {
-            'nombre': jugador.nombre,
-            'apellido': jugador.apellido,
-            'email': jugador.posicion,
-            'profesion': jugador.pais,
-        }
-        formulario = JugadorFormulario(initial=inicial)
-    return render(request, "AppCoder/form_jugador.html", {"formulario": formulario})
-
-
-# Vistas de Jugador
-
-class JugadorListView(ListView):
-    model = Jugador
-    template_name = 'AppCoder/jugadores.html'
-
-
-class JugadorCreateView(CreateView):
-    model = Jugador
-    fields = ['nombre', 'apellido']
-    success_url = reverse_lazy('jugadores')
-
-
-class JugadorUpdateView(UpdateView):
-    model = Jugador
-    fields = ['nombre', 'apellido']
-    success_url = reverse_lazy('jugadores')
-
-
-class JugadorDeleteView(DeleteView):
-    pass
+        return render(request, "AppCoder/jugadores.html", {'jugadores': []})
 
 #Formulario de Partido
-
-def partidos(request):
-    partidos = Partido.objects.all()  # trae todos los jugadores
-    contexto = {"partidos": partidos}
-    borrado = request.GET.get('borrado', None)
-    contexto['borrado'] = borrado
-
-    return render(request, "AppCoder/partido.html", contexto)
-
-
-def eliminar_partido(request, id):
-    partido = Partido.objects.get(id=id)
-    borrado_id = partido.id
-    partido.delete()
-    url_final = f"{reverse('partidos')}?borrado={borrado_id}"
-
-    return redirect(url_final)
-
 
 def crear_partido(request):
     if request.method == 'POST':
@@ -180,14 +96,18 @@ def crear_partido(request):
         formulario = PartidoFormulario()  # Formulario vacio para construir el html
     return render(request, "AppCoder/form_partido.html", {"formulario": formulario})
 
+def busqueda_partido(request):
+    return render(request, "AppCoder/form_busqueda_partido.html")
+
+
 
 def buscar_partido(request):
-    if request.GET["equipo"]:
-        equipo = request.GET["equipo"]
-        encuentros = Partido.objects.filter(equipo__icontains=equipo)
-        return render(request, "AppCoder/partido.html", {'encuentros': encuentros})
+    if request.GET('fecha'):
+        fecha = request.GET('fecha')
+        partidos = Partido.objects.filter(fecha__icontains=fecha)
+        return render(request, "AppCoder/partido.html", {'partidos': partidos})
     else:
-        return render(request, "AppCoder/partido.html", {'encuentros': []})
+        return render(request, "AppCoder/partido.html", {'partidos': []})
 
 
 

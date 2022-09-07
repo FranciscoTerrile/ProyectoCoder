@@ -5,11 +5,17 @@ class Jugador(models.Model):
     apellido = models.CharField(max_length=128)
     posicion = models.CharField(max_length=128)
     pais = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return f'{self.pais} - {self.posicion}'
 
 
 class Partido(models.Model):
     fecha = models.DateTimeField() 
     equipo = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f'{self.equipo} - {self.fecha}'
 
 
 class Reserva(models.Model):

@@ -3,7 +3,7 @@
 <form action="{% url 'busqueda_reserva' %}" method="GET">
   {% csrf_token %}
   <span>Equipo:
-    <input type="text" equipo="equipo">
+    <input type="text" equipo="nombre">
   </span>
   <input type="submit" value="Buscar" />
 </form>

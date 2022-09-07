@@ -30,13 +30,21 @@
         <strong>Nombre</strong>
       </th>
       <th>
-        <strong>Equipo</strong>
+        <strong>E-mail</strong>
       </th>
-    </tr>
+        <th>
+          <strong>Equipo</strong>
+        </th>
+        <th>
+          <strong>Fecha</strong>
+        </th>
+      </tr>
     {% for reserva in reservas %}
     <tr>
       <td>{{reserva.nombre}}</td>
+      <td>{{reserva.email}}</td>
       <td>{{reserva.equipo}}</td>
+      <td>{{reserva.fecha}}</td>
     </tr>
     {% endfor %}
   </tbody>

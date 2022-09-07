@@ -3,7 +3,7 @@
 <form action="{% url 'busqueda_partido' %}" method="GET">
   {% csrf_token %}
   <span>Fecha:
-    <input type="date" fechao="fecha">
+    <input type="text" equipo="equipo">
   </span>
   <input type="submit" value="Buscar" />
 </form>
