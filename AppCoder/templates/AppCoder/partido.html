@@ -37,6 +37,8 @@
     <tr>
       <td>{{partido.fecha}}</td>
       <td>{{partido.equipo}}</td>
+      <td><a href="{% url 'editar_partido' partido.id %}">Editar</a></td>
+      <td><a href="{% url 'eliminar_partido' partido.id %}">Eliminar</a></td>
     </tr>
     {% endfor %}
   </tbody>

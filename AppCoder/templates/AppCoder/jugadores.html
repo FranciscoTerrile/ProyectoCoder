@@ -47,6 +47,8 @@
       <td>{{jugador.apellido}}</td>
       <td>{{jugador.posicion}}</td>
       <td>{{jugador.pais}}</td>
+      <td><a href="{% url 'editar_jugador' jugador.id %}">Editar</a></td>
+      <td><a href="{% url 'eliminar_jugador' jugador.id %}">Eliminar</a></td>
     </tr>
     {% endfor %}
   </tbody>
