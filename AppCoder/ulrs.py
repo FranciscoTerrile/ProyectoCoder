@@ -28,6 +28,6 @@ urlpatterns = [
     path('eliminar-partido/<int:id>/', views.eliminar_partido, name="eliminar_partido"),
     #Registro usuario y sesion
     path('login/', views.login_request, name = 'login'),
-    path('register/', views.register, name = 'register'),
+    path('login/register/', views.register, name = 'register'),
     path('logout/', views.CustomLogoutView.as_view(), name = 'logout'),
 ]
