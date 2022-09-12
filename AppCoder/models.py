@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Jugador(models.Model):
     nombre = models.CharField(max_length=128)
     apellido = models.CharField(max_length=128)
@@ -26,5 +27,3 @@ class Reserva(models.Model):
     
     def __str__(self):
         return f'{self.equipo} - {self.fecha}'
-
-# Create your models here.

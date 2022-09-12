@@ -1,32 +1,42 @@
-from datetime import date
-from typing import Dict
-from django.shortcuts import HttpResponse
+# from datetime import date
+# from typing import Dict
+# from django.shortcuts import HttpResponse
+#from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+# from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from AppCoder.models import Partido, Reserva, Jugador
-from AppCoder.forms import ReservaFormulario, JugadorFormulario, PartidoFormulario
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy, reverse
+from AppCoder.forms import ReservaFormulario, JugadorFormulario, PartidoFormulario, UserRegisterForm
+from django.urls import reverse
 
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LogoutView
 
+@login_required
 def inicio(request):
 
       return render(request, "AppCoder/inicio.html")
 
+@login_required
 def partido(request):
     partidos = Partido.objects.all()
     return render(request, "AppCoder/partido.html", {'partidos': partidos})
-      
 
+@login_required
 def reservas(request):
     reservas = Reserva.objects.all()
     return render(request, "AppCoder/reservas.html", {'reservas': reservas})
 
+@login_required
 def jugador(request):
     jugadores = Jugador.objects.all()
     return render(request, "AppCoder/jugadores.html", {'jugadores': jugadores})
 
 # Formulario Reservas
 
+@login_required
 def crear_reserva(request):
     if request.method == 'POST':
         formulario = ReservaFormulario(request.POST)
@@ -40,11 +50,11 @@ def crear_reserva(request):
         formulario = ReservaFormulario()  # Formulario vacio para construir el html
     return render(request, "AppCoder/form_reserva.html", {"formulario": formulario})
 
-
+@login_required
 def busqueda_reservas(request):
     return render(request, "AppCoder/form_busqueda_reserva.html")
 
-
+@login_required
 def buscar_reserva(request):
     if request.GET['nombre']:
         nombre = request.GET['nombre'] #if nombre in request.GET else None
@@ -53,6 +63,7 @@ def buscar_reserva(request):
     else:
         return render(request, "AppCoder/reservas.html", {'reservas': []})
 
+@login_required
 def editar_reserva(request, id):
     reserva = Reserva.objects.get(id=id)
 
@@ -80,6 +91,7 @@ def editar_reserva(request, id):
         formulario = ReservaFormulario(initial=inicial)
     return render(request, "AppCoder/form_reserva.html", {"formulario": formulario})
 
+@login_required
 def eliminar_reserva(request, id):
     reserva = Reserva.objects.get(id=id)
     borrado_id = reserva.id
@@ -88,9 +100,9 @@ def eliminar_reserva(request, id):
 
     return redirect(url_final)
     
-
 #Formulario Juagdor
 
+@login_required
 def crear_jugador(request):
     if request.method == 'POST':
         formulario = JugadorFormulario(request.POST)
@@ -104,10 +116,11 @@ def crear_jugador(request):
         formulario = JugadorFormulario()  # Formulario vacio para construir el html
     return render(request, "AppCoder/form_jugador.html", {"formulario": formulario})
 
+@login_required
 def busqueda_jugador(request):
     return render(request, "AppCoder/form_busqueda_jugador.html")
 
-
+@login_required
 def buscar_jugador(request):
     if request.GET['pais']:
         pais = request.GET['pais'] 
@@ -116,6 +129,7 @@ def buscar_jugador(request):
     else:
         return render(request, "AppCoder/jugadores.html", {'jugadores': []})
 
+@login_required
 def editar_jugador(request, id):
     jugador = Jugador.objects.get(id=id)
 
@@ -143,6 +157,7 @@ def editar_jugador(request, id):
         formulario = JugadorFormulario(initial=inicial)
     return render(request, "AppCoder/form_jugador.html", {"formulario": formulario})
 
+@login_required
 def eliminar_jugador(request, id):
     jugador = Jugador.objects.get(id=id)
     borrado_id = jugador.id
@@ -151,9 +166,9 @@ def eliminar_jugador(request, id):
 
     return redirect(url_final)
 
-
 #Formulario de Partido
 
+@login_required
 def crear_partido(request):
     if request.method == 'POST':
         formulario = PartidoFormulario(request.POST)
@@ -167,10 +182,11 @@ def crear_partido(request):
         formulario = PartidoFormulario()  # Formulario vacio para construir el html
     return render(request, "AppCoder/form_partido.html", {"formulario": formulario})
 
-    
+@login_required
 def busqueda_partido(request):
     return render(request, "AppCoder/form_busqueda_partido.html")
 
+@login_required
 def buscar_partido(request):
     if request.GET['equipo']:
         equipo = request.GET['equipo']
@@ -179,6 +195,7 @@ def buscar_partido(request):
     else:
         return render(request, "AppCoder/partido.html", {'partidos': []})
 
+@login_required
 def editar_partido(request, id):
     partido = Partido.objects.get(id=id)
 
@@ -202,6 +219,7 @@ def editar_partido(request, id):
         formulario = PartidoFormulario(initial=inicial)
     return render(request, "AppCoder/form_partido.html", {"formulario": formulario})
 
+@login_required
 def eliminar_partido(request, id):
     partido = Partido.objects.get(id=id)
     borrado_id = partido.id
@@ -210,4 +228,47 @@ def eliminar_partido(request, id):
 
     return redirect(url_final)
 
+# Views de usuarios, registro, login o logout
+
+def register(request):
+    mensaje = ''
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return render(request, "AppCoder/inicio.html", {"mensaje":"Usuario creado con exito :"})
+        else:
+            mensaje = 'Cometiste un error en el registro'
+    formulario = UserRegisterForm()  # Formulario vacio para construir el html
+    context = {
+        'form': formulario,
+        'mensaje': mensaje
+    }
+    return render(request, "AppCoder/registro.html", context=context)
+
+def login_request(request):
+    next_url = request.GET.get('next')
+    if request.method == "POST":
+        form = AuthenticationForm(request, data = request.POST)
+        
+        if form.is_valid():
+            usuario = form.cleaned_data.get('username')
+            contra = form.cleaned_data.get('password')
+            user = authenticate(username=usuario, password=contra)
+            if user:
+                login(request=request, user=user)
+                if next_url:
+                    return redirect(next_url)
+                return render(request, "AppCoder/inicio.html", {"mensaje":f"Bienvenido {usuario}"})
+            else:
+                return render(request,"AppCoder/inicio.html", {"mensaje":"Error, datos incorrectos"})
+        else:
+            return render(request,"AppCoder/inicio.html", {"mensaje":"Error, formulario erroneo"})
+
+    form = AuthenticationForm()
+    return render(request,"AppCoder/login.html", {'form':form} )
+
+class CustomLogoutView(LogoutView):
+    template_name = 'AppCoder/logout.html'
 
