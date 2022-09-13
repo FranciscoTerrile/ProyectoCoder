@@ -9,5 +9,5 @@
 + El formato de la fecha es mm/dd/yyyy
 + Correr pip install -r requirements.txt
 -----------------------------------------------------
-Admin user: i536719
-password: Coopercrack2022
+Admin user: admin
+password: Python12345
