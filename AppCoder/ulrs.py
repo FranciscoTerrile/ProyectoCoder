@@ -26,6 +26,9 @@ urlpatterns = [
     path('busqueda-partido/', views.buscar_partido, name="busqueda_partido"),
     path('editar-partido/<int:id>/', views.editar_partido, name="editar_partido"),
     path('eliminar-partido/<int:id>/', views.eliminar_partido, name="eliminar_partido"),
+    # URLS Perfil
+    path('editar-perfil/', views.ProfileUpdateView.as_view(), name="editar_perfil"),
+    path('agregar-avatar/', views.agregar_avatar, name="agregar_avatar"),
     #Registro usuario y sesion
     path('login/', views.login_request, name = 'login'),
     path('login/register/', views.register, name = 'register'),

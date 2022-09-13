@@ -3,10 +3,15 @@
 # from django.shortcuts import HttpResponse
 #from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 # from django.urls import reverse_lazy
+from typing import Dict
+
 from django.shortcuts import render, redirect
 from AppCoder.models import Partido, Reserva, Jugador
-from AppCoder.forms import ReservaFormulario, JugadorFormulario, PartidoFormulario, UserRegisterForm
-from django.urls import reverse
+from AppCoder.forms import ReservaFormulario, JugadorFormulario, PartidoFormulario, UserRegisterForm, UserUpdateForm, AvatarFormulario
+from django.urls import reverse, reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
@@ -228,7 +233,33 @@ def eliminar_partido(request, id):
 
     return redirect(url_final)
 
+#Update Profile
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = UserUpdateForm
+    success_url = reverse_lazy('inicio')
+    template_name = 'AppCoder/form_perfil.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
 # Views de usuarios, registro, login o logout
+
+@login_required
+def agregar_avatar(request):
+    if request.method == 'POST':
+
+        form = AvatarFormulario(request.POST, request.FILES) #aquí me llega toda la información del html
+
+        if form.is_valid:   #Si pasó la validación de Django
+            avatar = form.save()
+            avatar.user = request.user
+            avatar.save()
+            return redirect(reverse('inicio'))
+
+    form = AvatarFormulario() #Formulario vacio para construir el html
+    return render(request, "AppCoder/form_avatar.html", {"form":form})
 
 def register(request):
     mensaje = ''
